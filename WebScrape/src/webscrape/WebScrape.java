@@ -45,9 +45,9 @@ public class WebScrape {
                     }
                 else {
             for (Element row : document.select(
-                    ".s-result-item"))
+                    ".a-fixed-left-grid"))
             {
-                if(row.select(".s-result-item").text().equals("")){
+                if(row.select(".a-fixed-left-grid").text().equals("")){
                     System.out.println("no hay mas articulos");
                     continue;
                 
@@ -56,22 +56,24 @@ public class WebScrape {
                 final String titulo = 
                         row.select("h2.a-size-medium").text();
                             System.out.println(titulo);
-                        Element link = row.select("a").first();
+                        Elements link = row.select("a").attr("title", titulo);
                         String links = 
                             link.attr("href");
-                            //System.out.println(links);
+                            System.out.println(links);
                         Element imgs = row.select("img").first();
                         String images = 
                             imgs.attr("src");
                             System.out.println(images);
-                        Element asins = row.select("li").first();
-                        String asin = 
-                            asins.attr("data-asin");
-                            System.out.println(asin);
-                                String[] parts = links.split(asin);
+                        
+                                String[] parts = links.split("dp/");
                                 String part1 = parts[0]; // 123
+                                System.out.println(part1+" parte 1");
                                 String part2 = parts[1]; // 654321
-                                String afiliado = part1+asin+"?tag=webmerchandising-21";
+                                System.out.println(part2+" parte 2");
+                                //Element asins = row.select("li").first();
+                            String asin = part2.substring(0, 10);
+                            System.out.println(asin);
+                                String afiliado = part1+"dp/"+asin+"?tag=webmerchandising-21";
                                 String [] dato = {afiliado, images, titulo, asin};
                                 
 
